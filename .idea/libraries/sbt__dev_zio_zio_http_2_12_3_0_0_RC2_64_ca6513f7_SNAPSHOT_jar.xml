@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="sbt: dev.zio:zio-http_2.12:3.0.0-RC2+64-ca6513f7-SNAPSHOT:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Library/Caches/Coursier/v1/https/oss.sonatype.org/content/repositories/snapshots/dev/zio/zio-http_2.12/3.0.0-RC2%2B64-ca6513f7-SNAPSHOT/zio-http_2.12-3.0.0-RC2%2B64-ca6513f7-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/Library/Caches/Coursier/v1/https/oss.sonatype.org/content/repositories/snapshots/dev/zio/zio-http_2.12/3.0.0-RC2%2B64-ca6513f7-SNAPSHOT/zio-http_2.12-3.0.0-RC2%2B64-ca6513f7-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Library/Caches/Coursier/v1/https/oss.sonatype.org/content/repositories/snapshots/dev/zio/zio-http_2.12/3.0.0-RC2%2B64-ca6513f7-SNAPSHOT/zio-http_2.12-3.0.0-RC2%2B64-ca6513f7-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
