@@ -25,7 +25,6 @@ case class CategoryRepository(db: DatabaseProvider) {
 
   def getCategory(id: Long): IO[Throwable, Seq[Category]] =
     ZIO.fromDBIO(categoryTable.filter(_.category_id === id).result).provideEnvironment(ZEnvironment(db))
-
 }
 
 object CategoryRepository {

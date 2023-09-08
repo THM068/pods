@@ -23,3 +23,8 @@ case class AppServer(healthCheck: HealthCheck, categoryRoutes: CategoryRoutes) {
 object AppServer {
   val layer = ZLayer.fromFunction(AppServer.apply _)
 }
+
+object HandleErrors {
+  def handle(throwable: Throwable) = Response.text("The error is " + throwable).status(Status.InternalServerError)
+
+}
