@@ -13,7 +13,7 @@ class HealthCheck {
   val jsonRoute =
     Method.GET / "json" -> handler(Response.json("""{"greetings": "Hello World!"}"""))
 
-  val routes = Chunk(appStatus, jsonRoute)
+  val routesChunk = Routes(appStatus, jsonRoute).routes
 
 }
 

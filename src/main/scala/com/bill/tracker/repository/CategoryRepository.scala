@@ -7,6 +7,8 @@ import slick.interop.zio.DatabaseProvider
 import zio._
 
 case class CategoryRepository(db: DatabaseProvider) {
+
+
   private val categoryTable =TableQuery[CategoryTable.Categorys]
 
   def findAll(): IO[Throwable, Seq[Category]] =
@@ -20,6 +22,9 @@ case class CategoryRepository(db: DatabaseProvider) {
 
   def deleteCategory(id: Long): IO[Throwable, Int] =
     ZIO.fromDBIO(categoryTable.filter(_.category_id === id).delete).provideEnvironment(ZEnvironment(db))
+
+  def getCategory(id: Long): IO[Throwable, Seq[Category]] =
+    ZIO.fromDBIO(categoryTable.filter(_.category_id === id).result).provideEnvironment(ZEnvironment(db))
 
 }
 
