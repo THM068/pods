@@ -1,6 +1,8 @@
 package com.bill.tracker.server.routes
 import com.bill.tracker.model.AppStatus
+import com.bill.tracker.server.HandleErrors
 import zio._
+import zio.http.Middleware.basicAuth
 import zio.http._
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, EncoderOps, JsonDecoder, JsonEncoder}
 class HealthCheck {
@@ -13,7 +15,9 @@ class HealthCheck {
   val jsonRoute =
     Method.GET / "json" -> handler(Response.json("""{"greetings": "Hello World!"}"""))
 
-  val routesChunk = Routes(appStatus, jsonRoute).routes
+  val apps = Routes(appStatus, jsonRoute)
+    .handleError(HandleErrors.handle)
+    .toHttpApp
 
 }
 

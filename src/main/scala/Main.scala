@@ -1,7 +1,7 @@
 import com.bill.tracker.model.ConfigLayer
 import com.bill.tracker.repository.CategoryRepository
 import com.bill.tracker.server.AppServer
-import com.bill.tracker.server.routes.{CategoryRoutes, HealthCheck}
+import com.bill.tracker.server.routes.{CategoryRoutes, HealthCheck, StockTicker, StockTickerBroadCaster}
 import zio.Console.{printLine, readLine}
 import zio._
 import zio.logging.LogFormat
@@ -15,6 +15,7 @@ object Main extends ZIOAppDefault {
 
   // Run it like any simple app
   override val run: Task[Unit] = for {
+    _ <- StockTickerBroadCaster.scheduleNotification.fork
     f <- ZIO.serviceWithZIO[AppServer](_.runServer())
       .provide(
         ZLayer.Debug.mermaid,
@@ -22,7 +23,8 @@ object Main extends ZIOAppDefault {
         HealthCheck.layer,
         CategoryRepository.layer,
         CategoryRoutes.layer,
-        ConfigLayer.layer
+        ConfigLayer.layer,
+        StockTicker.layer
       ).forkDaemon
     _ <- ZIO.log("Starting app ...")
     _ <- printLine("Press Any Key to stop the server") *> readLine.catchAll(e =>

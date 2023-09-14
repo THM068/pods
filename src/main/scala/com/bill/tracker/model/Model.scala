@@ -105,3 +105,10 @@ object Message {
   implicit val encoder: JsonEncoder[Message] = DeriveJsonEncoder.gen[Message]
   implicit val decoder: JsonDecoder[Message] = DeriveJsonDecoder.gen[Message]
 }
+
+case class Stock(name: String = "AMZ", price: Long)
+
+object Stock {
+  implicit val decoder: JsonDecoder[Stock] = DeriveJsonDecoder.gen[Stock]
+  implicit val encoder: JsonEncoder[Stock] = DeriveJsonEncoder.gen[Stock]
+}
