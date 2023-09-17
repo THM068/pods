@@ -1,6 +1,6 @@
 package com.bill.tracker.server.routes
 import com.bill.tracker.model._
-import com.bill.tracker.repository.CategoryRepository
+import com.bill.tracker.repository.{AccountRepository, CategoryRepository}
 import com.bill.tracker.server.HandleErrors
 import com.bill.tracker.server.routes.ServerUtils.parseBody
 import zio._
@@ -73,7 +73,8 @@ case class CategoryRoutes(categoryRepository: CategoryRepository) {
   }
   val apps = Routes(categories,  findByName, getCategory, addCategory, deleteCategory)
     .handleError(HandleErrors.handle)
-    .toHttpApp @@ basicAuth("admin", "admin")
+    .toHttpApp
+
 }
 
 object CategoryRoutes {

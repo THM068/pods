@@ -1,5 +1,5 @@
 import com.bill.tracker.model.ConfigLayer
-import com.bill.tracker.repository.CategoryRepository
+import com.bill.tracker.repository.{AccountRepository, CategoryRepository}
 import com.bill.tracker.server.AppServer
 import com.bill.tracker.server.routes.{CategoryRoutes, HealthCheck, StockTicker, StockTickerBroadCaster}
 import zio.Console.{printLine, readLine}

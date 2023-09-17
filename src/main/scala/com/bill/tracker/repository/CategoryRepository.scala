@@ -10,7 +10,6 @@ case class CategoryRepository(db: DatabaseProvider) {
 
 
   private val categoryTable =TableQuery[CategoryTable.Categorys]
-
   def findAll(): IO[Throwable, Seq[Category]] =
     ZIO.fromDBIO(categoryTable.result).provideEnvironment(ZEnvironment(db))
 
