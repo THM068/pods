@@ -1,6 +1,6 @@
 package com.bill.tracker.repository
 
-import com.bill.tracker.model.{AccountTable}
+import com.bill.tracker.model.{Account, AccountTable}
 import slick.interop.zio.DatabaseProvider
 import slick.lifted.TableQuery
 import slick.jdbc.PostgresProfile.api._
@@ -12,6 +12,13 @@ case class AccountRepository (db: DatabaseProvider) {
 
   def create(): IO[Throwable, Unit] =
     ZIO.fromDBIO(accountTable.schema.createIfNotExists).provideEnvironment(ZEnvironment(db))
+
+  def createCategory(account: Account): IO[Throwable, Long] =
+    ZIO.fromDBIO(accountTable returning accountTable.map(_.account_id) += account).provideEnvironment(ZEnvironment(db))
+
+  def findByEmail(email: String): IO[Throwable, Option[Account]] =
+    ZIO.fromDBIO(accountTable.filter(_.email === email).result.headOption).provideEnvironment(ZEnvironment(db))
+
 }
 
 object AccountRepository {

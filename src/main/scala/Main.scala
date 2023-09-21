@@ -25,11 +25,7 @@ object Main extends ZIOAppDefault {
         CategoryRoutes.layer,
         ConfigLayer.layer,
         StockTicker.layer
-      ).forkDaemon
-    _ <- ZIO.log("Starting app ...")
-    _ <- printLine("Press Any Key to stop the server") *> readLine.catchAll(e =>
-      printLine(s"There was an error server can't be started !!! ${e.getMessage}")
-    ) *> f.interrupt
+      )
 
   } yield ()
 }

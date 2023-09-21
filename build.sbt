@@ -29,3 +29,7 @@ lazy val root = (project in file("."))
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
   )
+
+enablePlugins(JavaAppPackaging)
+enablePlugins(DockerPlugin)
+dockerBaseImage := "openjdk:11-jdk"

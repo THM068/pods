@@ -75,10 +75,10 @@ object DatabaseProviderLayer {
 object ConfigLayer {
   private val config = ConfigFactory.parseMap(
      Map(
-      "url" -> "jdbc:postgresql:pagila",
+      "url" -> "jdbc:postgresql://family-pods-db.internal:5432/family_pods?user=postgres&password=jxoRJpkwesSyclp",
       "driver" -> "org.postgresql.Driver",
       "user" -> "postgres",
-      "password" -> "test",
+      "password" -> "jxoRJpkwesSyclp",
       "numThreads" -> "10",
       "maxConnections" -> "10"
     ).asJava
@@ -126,5 +126,20 @@ object AccountTable {
 
   }
 }
+
+//object ConfigLayer {
+//  private val config = ConfigFactory.parseMap(
+//    Map(
+//      "url" -> "jdbc:postgresql:jxoRJpkwesSyclp@family-pods-db.flycast",
+//      "driver" -> "org.postgresql.Driver",
+//      "user" -> "postgres",
+//      "password" -> "jxoRJpkwesSyclp",
+//      "numThreads" -> "10",
+//      "maxConnections" -> "10"
+//    ).asJava
+//
+//
+//  )
+
 
 

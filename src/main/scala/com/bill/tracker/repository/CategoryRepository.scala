@@ -10,6 +10,9 @@ case class CategoryRepository(db: DatabaseProvider) {
 
 
   private val categoryTable =TableQuery[CategoryTable.Categorys]
+
+  def create(): IO[Throwable, Unit] =
+    ZIO.fromDBIO(categoryTable.schema.createIfNotExists).provideEnvironment(ZEnvironment(db))
   def findAll(): IO[Throwable, Seq[Category]] =
     ZIO.fromDBIO(categoryTable.result).provideEnvironment(ZEnvironment(db))
 

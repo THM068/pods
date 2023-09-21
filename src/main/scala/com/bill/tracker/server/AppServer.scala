@@ -11,9 +11,9 @@ case class AppServer(healthCheck: HealthCheck, categoryRoutes: CategoryRoutes, s
   val app = healthCheck.apps ++ categoryRoutes.apps ++ stockTicker.apps
 
   def runServer(): ZIO[Any, Throwable, Unit] = for {
-    _ <- ZIO.debug(s"Starting server on http://localhost:9091")
+    _ <- ZIO.debug(s"Starting server on http://localhost:8080")
     _ <- Server.serve(app)
-      .provide(Server.defaultWithPort(9091))
+      .provide(Server.defaultWithPort(8080))
   } yield ()
 
 }

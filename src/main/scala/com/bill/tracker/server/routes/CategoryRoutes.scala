@@ -10,6 +10,12 @@ import zio.json.EncoderOps
 
 case class CategoryRoutes(categoryRepository: CategoryRepository) {
 
+  val create = Method.POST / "category" / "create" -> handler {
+    for {
+      _ <- categoryRepository.create()
+    } yield Response.ok
+  }
+
   val categories = Method.GET / "category" -> handler {
     (for {
       categoryList <- categoryRepository.findAll()
@@ -71,7 +77,7 @@ case class CategoryRoutes(categoryRepository: CategoryRepository) {
           .status(Status.BadRequest)
       )
   }
-  val apps = Routes(categories,  findByName, getCategory, addCategory, deleteCategory)
+  val apps = Routes(categories,  findByName, getCategory, addCategory, deleteCategory, create)
     .handleError(HandleErrors.handle)
     .toHttpApp
 
