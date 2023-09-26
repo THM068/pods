@@ -38,7 +38,7 @@ class StockTicker {
     ).toHttpApp
 }
 
-object StockTicker {
+object AutowireStockTicker {
   val layer: ZLayer[Any, Nothing, StockTicker] =
     ZLayer.succeed(new StockTicker())
 }

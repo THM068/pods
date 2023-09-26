@@ -29,7 +29,7 @@ case class CategoryRepository(db: DatabaseProvider) {
     ZIO.fromDBIO(categoryTable.filter(_.category_id === id).result).provideEnvironment(ZEnvironment(db))
 }
 
-object CategoryRepository {
+object AutowireCategoryRepository {
   val layer: ZLayer[DatabaseProvider, Nothing, CategoryRepository] =
     ZLayer {
       for {

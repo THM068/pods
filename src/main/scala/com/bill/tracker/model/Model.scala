@@ -1,16 +1,15 @@
 package com.bill.tracker.model
-import com.bill.tracker.repository.CategoryRepository
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.ConfigFactory
 import slick.interop.zio.DatabaseProvider
 import slick.jdbc.JdbcProfile
 import slick.jdbc.PostgresProfile.api._
 import slick.sql.SqlProfile.ColumnOption.SqlType
+import zio.config.magnolia.deriveConfig
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
-import zio.ZLayer
+import zio.{ZIO, ZLayer}
 
 import java.sql.Timestamp
-import java.time.LocalDateTime
-import scala.jdk.CollectionConverters.{dictionaryAsScalaMap, mapAsJavaMapConverter}
+import scala.jdk.CollectionConverters.mapAsJavaMapConverter
 case class AppStatus(status: String)
 case class Category(
                      category_id: Long,
@@ -67,26 +66,31 @@ object CategoryMapper extends TimestampReadWrite{
   implicit val decodeCategoryMapper: JsonDecoder[CategoryMapper] = DeriveJsonDecoder.gen[CategoryMapper]
 }
 
-object DatabaseProviderLayer {
-
-  val layer: ZLayer[Config with JdbcProfile, Throwable, DatabaseProvider] = DatabaseProvider.fromConfig("kafka")
-}
-
-object ConfigLayer {
-  private val config = ConfigFactory.parseMap(
+object DBConfigLayer {
+  private val configuration: com.typesafe.config.Config = ConfigFactory.parseMap(
      Map(
-      "url" -> "jdbc:postgresql://family-pods-db.internal:5432/family_pods?user=postgres&password=jxoRJpkwesSyclp",
+      "url" -> "jdbc:postgresql:pagila",
       "driver" -> "org.postgresql.Driver",
       "user" -> "postgres",
-      "password" -> "jxoRJpkwesSyclp",
+      "password" -> "test",
       "numThreads" -> "10",
       "maxConnections" -> "10"
-    ).asJava
+    ).asJava)
 
-
+  val dbConfigLayer = ZLayer.fromZIO (
+    ZIO.config[DatabaseConfig](DatabaseConfig.config).map { config =>
+      ConfigFactory.parseMap( Map(
+        "url" -> config.url,
+        "driver" -> "org.postgresql.Driver",
+        "user" -> "postgres",
+        "password" -> config.password,
+        "numThreads" -> "10",
+        "maxConnections" -> "10"
+      ).asJava)
+    }
   )
 
-  val layer: ZLayer[Any, Throwable, DatabaseProvider] = (ZLayer.succeed(config) ++ ZLayer.succeed[JdbcProfile](
+  val layer: ZLayer[Any, Throwable, DatabaseProvider] = (dbConfigLayer ++ ZLayer.succeed[JdbcProfile](
     slick.jdbc.PostgresProfile
   )) >>> DatabaseProvider.fromConfig()
 }
@@ -111,9 +115,18 @@ case class Stock(name: String = "AMZ", price: Long)
 object Stock {
   implicit val decoder: JsonDecoder[Stock] = DeriveJsonDecoder.gen[Stock]
   implicit val encoder: JsonEncoder[Stock] = DeriveJsonEncoder.gen[Stock]
+
 }
 
-case class Account(account_id: Long, email: String, password: String)
+case class Account(account_id: Long, email: String, password: String) {
+
+}
+case class AccountDTO(id: Option[Long], email: String, password: String)
+
+object AccountDTO {
+  implicit val decoder: JsonDecoder[AccountDTO] = DeriveJsonDecoder.gen[AccountDTO]
+  implicit val encoder: JsonEncoder[AccountDTO] = DeriveJsonEncoder.gen[AccountDTO]
+}
 
 object AccountTable {
   class Accounts(tag: Tag) extends Table[Account](_tableTag = tag, "account") {
@@ -127,19 +140,38 @@ object AccountTable {
   }
 }
 
-//object ConfigLayer {
-//  private val config = ConfigFactory.parseMap(
-//    Map(
-//      "url" -> "jdbc:postgresql:jxoRJpkwesSyclp@family-pods-db.flycast",
-//      "driver" -> "org.postgresql.Driver",
-//      "user" -> "postgres",
-//      "password" -> "jxoRJpkwesSyclp",
-//      "numThreads" -> "10",
-//      "maxConnections" -> "10"
-//    ).asJava
-//
-//
-//  )
+object Account {
+  implicit val decoder: JsonDecoder[Account] = DeriveJsonDecoder.gen[Account]
+  implicit val encoder: JsonEncoder[Account] = DeriveJsonEncoder.gen[Account]
+
+  def fromAccountDto(accountDTO: AccountDTO): Account =
+    Account(0L, email = accountDTO.email, password = accountDTO.password)
+}
+
+case class JWTConfig(secret: String)
+object JWTConfig {
+  val config: zio.Config[JWTConfig] = deriveConfig[JWTConfig].nested("jwt")
+}
+
+case class DatabaseConfig(url: String, password: String)
+
+object DatabaseConfig {
+  val config: zio.Config[DatabaseConfig] = deriveConfig[DatabaseConfig].nested("database")
+}
+
+
+
+
+
+//private val config = ConfigFactory.parseMap(
+//  Map(
+//    "url" -> "jdbc:postgresql://family-pods-db.internal:5432/family_pods?user=postgres&password=jxoRJpkwesSyclp",
+//    "driver" -> "org.postgresql.Driver",
+//    "user" -> "postgres",
+//    "password" -> "jxoRJpkwesSyclp",
+//    "numThreads" -> "10",
+//    "maxConnections" -> "10"
+//  ).asJava
 
 
 

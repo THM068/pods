@@ -1,6 +1,5 @@
 package com.bill.tracker.server.routes
 import com.bill.tracker.model.AppStatus
-import com.bill.tracker.server.HandleErrors
 import zio._
 import zio.http.Middleware.basicAuth
 import zio.http._
@@ -21,7 +20,7 @@ class HealthCheck {
 
 }
 
-object HealthCheck {
+object AutoWireHealthCheck {
   val layer = ZLayer.succeed(new HealthCheck())
 }
 

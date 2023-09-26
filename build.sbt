@@ -13,7 +13,7 @@ lazy val root = (project in file("."))
       "com.typesafe.slick" %% "slick-hikaricp" % "3.4.1",
       "org.postgresql" % "postgresql" % "42.6.0",
       "io.scalac" %% "zio-slick-interop" % "0.6.0",
-      "dev.zio" %% "zio" % "2.0.16",
+      "dev.zio" %% "zio" % "2.0.17",
       "dev.zio" %% "zio-json" % "0.6.1",
       "dev.zio" %% "zio-http" % "3.0.0-RC2+64-ca6513f7-SNAPSHOT",
       "dev.zio" %% "zio-config" % "4.0.0-RC16",
@@ -25,8 +25,12 @@ lazy val root = (project in file("."))
       "com.pauldijou" %% "jwt-json4s-jackson" % "5.0.0",
       "dev.zio" %% "zio-streams" % "2.0.9",
       "dev.zio" %% "zio-kafka" % "2.1.1",
-      "dev.zio" %% "zio-test" % "2.0.16" % Test
-    ),
+      "dev.zio" %% "zio-test" % "2.0.16" % Test,
+      "dev.zio" %% "zio-crypto" % "0.0.0+120-8d0af0b1-SNAPSHOT",
+      "org.scalatest" %% "scalatest" % "3.2.12" % "test",
+      "org.scalamock" %% "scalamock" % "5.1.0" % Test
+
+),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
   )
 

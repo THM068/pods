@@ -15,6 +15,9 @@
     <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-core:2.14.2:jar" level="project" />
     <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-databind:2.14.2:jar" level="project" />
     <orderEntry type="library" name="sbt: com.github.luben:zstd-jni:1.5.2-1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.code.gson:gson:2.8.6:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.crypto.tink:tink:1.6.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.protobuf:protobuf-java:3.14.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.pauldijou:jwt-core_2.12:5.0.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.pauldijou:jwt-json-common_2.12:5.0.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.pauldijou:jwt-json4s-common_2.12:5.0.0:jar" level="project" />
@@ -34,8 +37,9 @@
     <orderEntry type="library" name="sbt: dev.zio:zio-config-typesafe_2.12:4.0.0-RC16:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-config_2.12:4.0.0-RC16:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-constraintless_2.12:0.3.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: dev.zio:zio-crypto_2.12:0.0.0+120-8d0af0b1-SNAPSHOT:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-http_2.12:3.0.0-RC2+64-ca6513f7-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="sbt: dev.zio:zio-internal-macros_2.12:2.0.16:jar" level="project" />
+    <orderEntry type="library" name="sbt: dev.zio:zio-internal-macros_2.12:2.0.17:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-json_2.12:0.6.1:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-kafka_2.12:2.1.1:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-logging-slf4j2_2.12:2.1.12:jar" level="project" />
@@ -48,10 +52,10 @@
     <orderEntry type="library" name="sbt: dev.zio:zio-schema-macros_2.12:0.4.13:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-schema-protobuf_2.12:0.4.13:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-schema_2.12:0.4.13:jar" level="project" />
-    <orderEntry type="library" name="sbt: dev.zio:zio-stacktracer_2.12:2.0.16:jar" level="project" />
+    <orderEntry type="library" name="sbt: dev.zio:zio-stacktracer_2.12:2.0.17:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-streams_2.12:2.0.16:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: dev.zio:zio-test_2.12:2.0.16:jar" level="project" />
-    <orderEntry type="library" name="sbt: dev.zio:zio_2.12:2.0.16:jar" level="project" />
+    <orderEntry type="library" name="sbt: dev.zio:zio_2.12:2.0.17:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty.incubator:netty-incubator-transport-classes-io_uring:0.0.20.Final:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty.incubator:netty-incubator-transport-native-io_uring:0.0.20.Final:linux-x86_64:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty:netty-buffer:4.1.93.Final:jar" level="project" />
@@ -84,8 +88,26 @@
     <orderEntry type="library" name="sbt: org.postgresql:postgresql:42.6.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.reactivestreams:reactive-streams:1.0.4:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-collection-compat_2.12:2.11.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scala-lang.modules:scala-xml_2.12:2.1.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.12.11:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang:scala-reflect:2.12.11:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalactic:scalactic_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalamock:scalamock_2.12:5.1.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-compatible:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-core_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-diagrams_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-featurespec_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-flatspec_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-freespec_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-funspec_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-funsuite_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-matchers-core_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-mustmatchers_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-propspec_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-refspec_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-shouldmatchers_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest-wordspec_2.12:3.2.12:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest_2.12:3.2.12:jar" level="project" />
     <orderEntry type="library" name="sbt: org.slf4j:slf4j-api:2.0.9:jar" level="project" />
     <orderEntry type="library" name="sbt: org.slf4j:slf4j-simple:2.0.9:jar" level="project" />
     <orderEntry type="library" name="sbt: org.xerial.snappy:snappy-java:1.1.8.4:jar" level="project" />

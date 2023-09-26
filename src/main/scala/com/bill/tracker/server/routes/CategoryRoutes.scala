@@ -1,10 +1,8 @@
 package com.bill.tracker.server.routes
 import com.bill.tracker.model._
-import com.bill.tracker.repository.{AccountRepository, CategoryRepository}
-import com.bill.tracker.server.HandleErrors
+import com.bill.tracker.repository.CategoryRepository
 import com.bill.tracker.server.routes.ServerUtils.parseBody
 import zio._
-import zio.http.Middleware.basicAuth
 import zio.http.{Method, Request, Response, Routes, Status, handler, long, string}
 import zio.json.EncoderOps
 

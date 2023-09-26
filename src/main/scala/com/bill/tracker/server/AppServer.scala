@@ -1,14 +1,12 @@
 package com.bill.tracker.server
-import com.bill.tracker.server.routes.{CategoryRoutes, HealthCheck, StockTicker}
+import com.bill.tracker.server.routes.{CategoryRoutes, HealthCheck, RegisterRoutes, StockTicker}
 import zio._
-import zio.http.Middleware.basicAuth
 import zio.http._
 
-case class AppServer(healthCheck: HealthCheck, categoryRoutes: CategoryRoutes, stockTicker: StockTicker) {
+case class AppServer(healthCheck: HealthCheck, categoryRoutes: CategoryRoutes,
+                     stockTicker: StockTicker, registerRoutes: RegisterRoutes) {
 
-  //val routes = Routes.fromIterable(healthCheck.a ++ categoryRoutes.routesChunk)
-  // Create HTTP route
-  val app = healthCheck.apps ++ categoryRoutes.apps ++ stockTicker.apps
+  val app = healthCheck.apps ++ categoryRoutes.apps ++ stockTicker.apps ++ registerRoutes.apps
 
   def runServer(): ZIO[Any, Throwable, Unit] = for {
     _ <- ZIO.debug(s"Starting server on http://localhost:8080")
@@ -18,11 +16,8 @@ case class AppServer(healthCheck: HealthCheck, categoryRoutes: CategoryRoutes, s
 
 }
 
-object AppServer {
+object AutowireAppServer {
   val layer = ZLayer.fromFunction(AppServer.apply _)
 }
 
-object HandleErrors {
-  def handle(throwable: Throwable) = Response.text("The error is " + throwable).status(Status.InternalServerError)
 
-}
