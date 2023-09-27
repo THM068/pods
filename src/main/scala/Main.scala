@@ -3,6 +3,7 @@ import com.bill.tracker.model.DBConfigLayer
 import com.bill.tracker.repository.{AutowireAccountRepository, AutowireCategoryRepository}
 import com.bill.tracker.server.routes._
 import com.bill.tracker.server.{AppServer, AutowireAppServer, AutowireJwtService}
+import com.bill.tracker.services.AutoWireAuthenticationService
 import zio._
 import zio.logging.LogFormat
 import zio.logging.backend.SLF4J
@@ -28,7 +29,9 @@ object Main extends ZIOAppDefault {
         AutowireAccountRepository.layer,
         AutowireAccountService.layer,
         RegisterRoutes.layer,
-        AutowireJwtService.layer
+        AutowireJwtService.layer,
+        AutoWireAuthenticationRoute.layer,
+        AutoWireAuthenticationService.layer
       )
 
   } yield ()

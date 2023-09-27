@@ -7,7 +7,7 @@ import zio.json._
 
 import java.time.Clock
 
-case class UserDetails(username: Option[String], profileId: Option[String])
+case class UserDetails(username: String, profileId: Long)
 object UserDetails {
   implicit val decode: JsonDecoder[UserDetails] =
     DeriveJsonDecoder.gen[UserDetails]
@@ -21,7 +21,7 @@ trait JwtService {
 }
 
 object AutowireJwtService {
-  val layer: ZLayer[String, Config.Error, JwtService] = ZLayer.fromZIO(
+  val layer: ZLayer[Any, Config.Error, JwtService] = ZLayer.fromZIO(
     ZIO.config[JWTConfig](JWTConfig.config).map { config =>
       JwtServiceLive(config.secret)
     }
