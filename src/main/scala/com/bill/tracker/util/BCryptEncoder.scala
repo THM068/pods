@@ -1,7 +1,7 @@
 package com.bill.tracker.util
 
 import java.nio.charset.StandardCharsets.US_ASCII
-import zio.crypto.hash.{Hash, HashAlgorithm}
+import zio.crypto.hash.{Hash, HashAlgorithm, MessageDigest}
 
 object BCryptEncoder {
 
@@ -12,12 +12,12 @@ object BCryptEncoder {
     )
   } yield digest
 
-//  def matches(rawValue: String, hashedValue: String) = for {
-//    verified <- Hash.verify[HashAlgorithm.SHA256](
-//      m = rawValue,
-//      digest = MessageDigest(hashedValue),
-//      charset = US_ASCII
-//    )
-//  } yield verified
+  def matches(rawValue: String, hashedValue: String) = for {
+    verified <- Hash.verify[HashAlgorithm.SHA256](
+      rawValue,
+      MessageDigest(hashedValue),
+      charset = US_ASCII
+    )
+  } yield verified
 
 }
