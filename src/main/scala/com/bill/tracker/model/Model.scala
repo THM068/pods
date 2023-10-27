@@ -3,12 +3,14 @@ import com.typesafe.config.ConfigFactory
 import slick.interop.zio.DatabaseProvider
 import slick.jdbc.JdbcProfile
 import slick.jdbc.PostgresProfile.api._
+import slick.lifted.MappedToBase.mappedToIsomorphism
 import slick.sql.SqlProfile.ColumnOption.SqlType
 import zio.config.magnolia.deriveConfig
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 import zio.{ZIO, ZLayer}
 
-import java.sql.Timestamp
+import java.sql.{Date, Timestamp}
+import java.time.LocalDate
 import scala.jdk.CollectionConverters.mapAsJavaMapConverter
 case class AppStatus(status: String)
 case class Category(
@@ -158,6 +160,30 @@ case class DatabaseConfig(url: String, password: String)
 object DatabaseConfig {
   val config: zio.Config[DatabaseConfig] = deriveConfig[DatabaseConfig].nested("database")
 }
+
+case class ExpensePeriod(id: Long, name: String, startAmount: BigDecimal, start_date: LocalDate)
+object ExpensePeriodTable {
+
+
+  class ExpensePeriodTable(tag: Tag) extends Table[ExpensePeriod](_tableTag = tag, "expense_period") {
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+
+    def name = column[String]("name")
+    def
+    start_amount = column[BigDecimal]("start_amount", O.SqlType("decimal(10, 4)"))
+    def start_date = column[LocalDate]("start_date")
+
+    def * = (id,  name, start_amount, start_date) <> ((ExpensePeriod.apply _).tupled, ExpensePeriod.unapply _)
+
+    implicit val localDateToDate = MappedColumnType.base[LocalDate, Date](
+      l => Date.valueOf(l),
+      d => d.toLocalDate
+    )
+
+  }
+}
+
+//case class Post(name: String, content: String, dateCreate:)
 
 
 

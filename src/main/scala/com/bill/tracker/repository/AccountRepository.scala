@@ -8,6 +8,7 @@ import slick.jdbc.PostgresProfile.api._
 import slick.interop.zio.syntax._
 import zio.{IO, ZEnvironment, ZIO, ZLayer}
 
+
 case class AccountRepository (db: DatabaseProvider) {
   private val accountTable = TableQuery[AccountTable.Accounts]
 

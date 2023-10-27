@@ -13,9 +13,9 @@ lazy val root = (project in file("."))
       "com.typesafe.slick" %% "slick-hikaricp" % "3.4.1",
       "org.postgresql" % "postgresql" % "42.6.0",
       "io.scalac" %% "zio-slick-interop" % "0.6.0",
-      "dev.zio" %% "zio" % "2.0.17",
+      "dev.zio" %% "zio" % "2.0.18",
       "dev.zio" %% "zio-json" % "0.6.1",
-      "dev.zio" %% "zio-http" % "3.0.0-RC2+64-ca6513f7-SNAPSHOT",
+      "dev.zio" %% "zio-http" % "3.0.0-RC3",
       "dev.zio" %% "zio-config" % "4.0.0-RC16",
       "dev.zio" %% "zio-config-typesafe" % "4.0.0-RC16",
       "dev.zio" %% "zio-config-magnolia" % "4.0.0-RC16",
@@ -24,7 +24,8 @@ lazy val root = (project in file("."))
       "org.slf4j" % "slf4j-simple" % "2.0.9",
       "com.pauldijou" %% "jwt-json4s-jackson" % "5.0.0",
       "dev.zio" %% "zio-streams" % "2.0.9",
-      "dev.zio" %% "zio-kafka" % "2.1.1",
+      "dev.zio" %% "zio-kafka" % "2.5.0",
+      "one.microstream" % "microstream-storage-embedded" % "08.01.01-MS-GA",
       "dev.zio" %% "zio-test" % "2.0.16" % Test,
       "dev.zio" %% "zio-crypto" % "0.0.0+120-8d0af0b1-SNAPSHOT",
       "org.scalatest" %% "scalatest" % "3.2.12" % "test",
@@ -36,4 +37,4 @@ lazy val root = (project in file("."))
 
 enablePlugins(JavaAppPackaging)
 enablePlugins(DockerPlugin)
-dockerBaseImage := "openjdk:11-jdk"
+dockerBaseImage := "openjdk:21-jdk"

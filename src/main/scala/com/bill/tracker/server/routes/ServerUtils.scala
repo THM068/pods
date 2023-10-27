@@ -23,6 +23,7 @@ object AppError {
 
   final case class AccountDoesNotExistError(message: String) extends AppError
   final case class WrongCredentialsError(message: String) extends AppError
+  final case class BearerTokenError(message: String) extends AppError
 
   //  final case class InvalidIdError(message: String) extends AppError
 

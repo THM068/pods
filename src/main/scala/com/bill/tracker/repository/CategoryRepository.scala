@@ -1,6 +1,7 @@
 package com.bill.tracker.repository
 import com.bill.tracker.model.CategoryTable
 import com.bill.tracker.model.Category
+import com.bill.tracker.model.CategoryTable.Categorys
 import slick.jdbc.PostgresProfile.api._
 import slick.interop.zio.syntax._
 import slick.interop.zio.DatabaseProvider

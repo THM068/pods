@@ -18,6 +18,8 @@ trait JwtService {
   def jwtEncode(userDetails: UserDetails): String
   def jwtDecode(token: String): Option[JwtClaim]
 
+  def getContent(jwtClaimOption: Option[JwtClaim]) = ???
+
 }
 
 object AutowireJwtService {

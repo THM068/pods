@@ -1,21 +1,25 @@
 package com.bill.tracker.server.routes
 import com.bill.tracker.model._
-import com.bill.tracker.repository.CategoryRepository
+import com.bill.tracker.repository.{CategoryRepository, ExpensePeriodRepository}
+import com.bill.tracker.server.{AutowireJwtService, JwtService}
 import com.bill.tracker.server.routes.ServerUtils.parseBody
 import zio._
+import zio.http.Middleware.bearerAuth
 import zio.http.{Method, Request, Response, Routes, Status, handler, long, string}
 import zio.json.EncoderOps
 
-case class CategoryRoutes(categoryRepository: CategoryRepository) {
+case class CategoryRoutes(categoryRepository: CategoryRepository, jwtService: JwtService, expensePeriodRepository: ExpensePeriodRepository) {
 
   val create = Method.POST / "category" / "create" -> handler {
     for {
       _ <- categoryRepository.create()
     } yield Response.ok
   }
-
-  val categories = Method.GET / "category" -> handler {
+  val categories = Method.GET / "category" -> handler { (request: Request) =>
     (for {
+      _ <- expensePeriodRepository.create()
+      userDetails <- Requesthelper.getUserDetails(request).provide(AutowireJwtService.layer)
+
       categoryList <- categoryRepository.findAll()
       categoryMapperList = CategoryMapperList(categoryMapperList = categoryList.map(_.toCategoryMapper()))
     } yield(Response.json(categoryMapperList.toJson))).catchSome(catchException)
@@ -30,14 +34,14 @@ case class CategoryRoutes(categoryRepository: CategoryRepository) {
 
   val deleteCategory = Method.DELETE / "category" / long("id") -> handler { (id: Long, _: Request) =>
     (for {
-      _ <- categoryRepository.deleteCategory(id)
+      _ <- categoryRepository.delete(id)
     } yield Response.status(Status.Ok)).catchSome(catchException)
   }
 
   val addCategory = Method.POST / "category" -> handler { (request: Request) =>
     (for {
         categoryDTO <- parseBody[CategoryDTO](request)
-        id <- categoryRepository.createCategory(categoryDTO.toCategory())
+        id <- categoryRepository.save(categoryDTO.toCategory())
       } yield Response.json(CategoryDTO(Some(id), categoryDTO.name).toJson).status(Status.Created)).catchSome(catchException)
   }
 
@@ -82,6 +86,6 @@ case class CategoryRoutes(categoryRepository: CategoryRepository) {
 }
 
 object CategoryRoutes {
-  val layer: ZLayer[CategoryRepository, Nothing, CategoryRoutes] =
+  val layer: ZLayer[CategoryRepository with JwtService with ExpensePeriodRepository, Nothing, CategoryRoutes] =
     ZLayer.fromFunction(CategoryRoutes.apply _)
 }
