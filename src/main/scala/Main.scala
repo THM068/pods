@@ -1,4 +1,5 @@
 import com.bill.tracker.AutowireAccountService
+import com.bill.tracker.microstream.{FruitContainer, FruitRepository, FruitStorage, MicroStream}
 import com.bill.tracker.model.DBConfigLayer
 import com.bill.tracker.publisher.{KafkaProducer, PublishUserRegisteredEvent}
 import com.bill.tracker.repository.{AutowireAccountRepository, AutowireCategoryRepository, AutowireExpensePeriodRepository}
@@ -44,7 +45,9 @@ object Main extends ZIOAppDefault {
         AutowireExpensePeriodRepository.layer,
         PublishUserRegisteredEvent.layer,
         KafkaProducer.layer,
-
+        FruitRoutes.layer,
+        FruitRepository.layer,
+        FruitStorage.layer
       )
 
   } yield ()

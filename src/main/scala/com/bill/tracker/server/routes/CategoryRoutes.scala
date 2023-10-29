@@ -17,8 +17,8 @@ case class CategoryRoutes(categoryRepository: CategoryRepository, jwtService: Jw
   }
   val categories = Method.GET / "category" -> handler { (request: Request) =>
     (for {
-      _ <- expensePeriodRepository.create()
-      userDetails <- Requesthelper.getUserDetails(request).provide(AutowireJwtService.layer)
+      _ <- Console.printLine(Thread.currentThread().getName).fork
+      _ <- Requesthelper.getUserDetails(request).provide(AutowireJwtService.layer)
 
       categoryList <- categoryRepository.findAll()
       categoryMapperList = CategoryMapperList(categoryMapperList = categoryList.map(_.toCategoryMapper()))
@@ -34,14 +34,14 @@ case class CategoryRoutes(categoryRepository: CategoryRepository, jwtService: Jw
 
   val deleteCategory = Method.DELETE / "category" / long("id") -> handler { (id: Long, _: Request) =>
     (for {
-      _ <- categoryRepository.delete(id)
+      _ <- categoryRepository.deleteCategory(id)
     } yield Response.status(Status.Ok)).catchSome(catchException)
   }
 
   val addCategory = Method.POST / "category" -> handler { (request: Request) =>
     (for {
         categoryDTO <- parseBody[CategoryDTO](request)
-        id <- categoryRepository.save(categoryDTO.toCategory())
+        id <- categoryRepository.createCategory(categoryDTO.toCategory())
       } yield Response.json(CategoryDTO(Some(id), categoryDTO.name).toJson).status(Status.Created)).catchSome(catchException)
   }
 
